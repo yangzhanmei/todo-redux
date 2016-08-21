@@ -18,11 +18,26 @@ class App extends Component {
         store.dispatch({type: 'TOGGLE', index});
     }
 
+    filter(filterName) {
+        store.dispatch({type: 'FILTER', filterName});
+    }
+
+    filterTodos() {
+        if (store.getState().filterName === 'ALL') {
+            return store.getState().todos;
+        } else if (store.getState().filterName === 'ACTIVE') {
+            return store.getState().todos.filter(todo => !todo.isDone);
+        } else {
+            return store.getState().todos.filter(todo => todo.isDone);
+        }
+    }
+
     render() {
         return <div>
             <AddTodo add={this.add.bind(this)}/>
-            <TodoList todos={store.getState().todos} delete={this.delete.bind(this)} toggle={this.toggle.bind(this)}/>
-            <Footer/>
+            <TodoList todos={this.filterTodos()} delete={this.delete.bind(this)}
+                      toggle={this.toggle.bind(this)}/>
+            <Footer filter={this.filter.bind(this)}/>
         </div>
     }
 }
@@ -67,9 +82,15 @@ class TodoList extends Component {
 }
 
 class Footer extends Component {
+    filter(type) {
+        this.props.filter(type);
+    }
+
     render() {
         return <div>
-            footer
+            <button onClick={this.filter.bind(this, "ALL")}>All</button>
+            <button onClick={this.filter.bind(this, "ACTIVE")}>Active</button>
+            <button onClick={this.filter.bind(this, "COMPLETE")}>Completed</button>
         </div>
     }
 }
