@@ -13,6 +13,7 @@ class App extends Component {
     render() {
         return <div>
             <AddTodo add={this.add.bind(this)}/>
+            <TodoList/>
         </div>
     }
 }
@@ -27,6 +28,14 @@ class AddTodo extends Component {
         return <div>
             <input type="text" ref="input"/>
             <button onClick={this.add.bind(this)}>+</button>
+        </div>
+    }
+}
+
+class TodoList extends Component{
+    render(){
+        return <div>
+            todoList
         </div>
     }
 }
