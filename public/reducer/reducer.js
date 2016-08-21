@@ -1,7 +1,8 @@
+let id = 0;
 export default function reducer(state = {todos: [], filterName: 'ALL'}, action) {
     switch (action.type) {
         case 'ADD':
-            state.todos.push({todo: action.todo, isDone: false});
+            state.todos.push({todo: action.todo, isDone: false, id: id++});
             return state;
         case 'DELETE':
             state.todos.splice(action.index, 1);

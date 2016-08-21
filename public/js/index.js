@@ -10,11 +10,13 @@ class App extends Component {
         store.dispatch({type: 'ADD', todo});
     }
 
-    delete(index) {
+    delete(id) {
+        const index = store.getState().todos.indexOf(store.getState().todos.find(todo => id === todo.id));
         store.dispatch({type: 'DELETE', index})
     }
 
-    toggle(index) {
+    toggle(id) {
+        const index = store.getState().todos.indexOf(store.getState().todos.find(todo => id === todo.id));
         store.dispatch({type: 'TOGGLE', index});
     }
 
@@ -59,20 +61,20 @@ class AddTodo extends Component {
 }
 
 class TodoList extends Component {
-    delete(index) {
-        this.props.delete(index);
+    delete(id) {
+        this.props.delete(id);
     }
 
-    toggle(index) {
-        this.props.toggle(index);
+    toggle(id) {
+        this.props.toggle(id);
     }
 
     render() {
         const todos = this.props.todos.map((todo, index)=> {
             return <div key={index}>
-                <input type="checkbox" checked={todo.isDone} onClick={this.toggle.bind(this, index)}/>
+                <input type="checkbox" checked={todo.isDone} onClick={this.toggle.bind(this, todo.id)}/>
                 <span style={{"textDecoration": todo.isDone ? "line-through" : ""}}>{todo.todo}</span>
-                <button onClick={this.delete.bind(this, index)}>x</button>
+                <button onClick={this.delete.bind(this, todo.id)}>x</button>
             </div>
         });
         return <div>
