@@ -7,10 +7,11 @@ let store = createStore(reducer);
 
 class App extends Component {
     add(todo) {
-        store.dispatch({type: 'ADD', todo})
+        store.dispatch({type: 'ADD', todo});
     }
-    delete(index){
-        store.dispatch({type:'DELETE',index})
+
+    delete(index) {
+        store.dispatch({type: 'DELETE', index})
     }
 
     render() {
@@ -25,6 +26,8 @@ class AddTodo extends Component {
     add() {
         const value = this.refs.input.value;
         this.props.add(value);
+        this.refs.input.value = '';
+        this.refs.input.focus();
     }
 
     render() {
@@ -36,14 +39,15 @@ class AddTodo extends Component {
 }
 
 class TodoList extends Component {
-    delete(index){
+    delete(index) {
         this.props.delete(index);
     }
+
     render() {
         const todos = this.props.todos.map((todo, index)=> {
             return <div key={index}>
                 {todo.todo}
-                <button onClick={this.delete.bind(this,index)}>x</button>
+                <button onClick={this.delete.bind(this, index)}>x</button>
             </div>
         });
         return <div>
