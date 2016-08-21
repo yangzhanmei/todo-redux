@@ -18,6 +18,7 @@ class App extends Component {
         return <div>
             <AddTodo add={this.add.bind(this)}/>
             <TodoList todos={store.getState().todos} delete={this.delete.bind(this)}/>
+            <Footer/>
         </div>
     }
 }
@@ -52,6 +53,14 @@ class TodoList extends Component {
         });
         return <div>
             {todos}
+        </div>
+    }
+}
+
+class Footer extends Component{
+    render(){
+        return <div>
+            footer
         </div>
     }
 }
