@@ -6,14 +6,17 @@ import {createStore} from 'redux';
 let store = createStore(reducer);
 
 class App extends Component {
-    add(value) {
-        store.dispatch({type: 'ADD', todos: {todo: value, isDone: false}})
+    add(todo) {
+        store.dispatch({type: 'ADD', todo})
+    }
+    delete(index){
+        store.dispatch({type:'DELETE',index})
     }
 
     render() {
         return <div>
             <AddTodo add={this.add.bind(this)}/>
-            <TodoList todos={store.getState().todos}/>
+            <TodoList todos={store.getState().todos} delete={this.delete.bind(this)}/>
         </div>
     }
 }
@@ -33,11 +36,14 @@ class AddTodo extends Component {
 }
 
 class TodoList extends Component {
+    delete(index){
+        this.props.delete(index);
+    }
     render() {
         const todos = this.props.todos.map((todo, index)=> {
             return <div key={index}>
-                {console.log(todo.todo)}
                 {todo.todo}
+                <button onClick={this.delete.bind(this,index)}>x</button>
             </div>
         });
         return <div>
