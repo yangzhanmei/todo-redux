@@ -8,8 +8,15 @@ let store = createStore(Reducer);
 class App extends Component{
     render(){
         return <div>
-           App
-            {store.getState().todos}
+           <AddTodo/>
+        </div>
+    }
+}
+
+class AddTodo extends Component{
+    render(){
+        return <div>
+            AddTodo
         </div>
     }
 }
