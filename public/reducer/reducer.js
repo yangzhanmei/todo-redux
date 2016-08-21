@@ -1,3 +1,6 @@
-export default function reducer(state = {todos: ['1', '2']}, action) {
+export default function reducer(state = {todos: []}, action) {
+    if (action.type === 'ADD') {
+        state.todos.push(action.todos);
+    }
     return state;
 }
