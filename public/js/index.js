@@ -14,10 +14,14 @@ class App extends Component {
         store.dispatch({type: 'DELETE', index})
     }
 
+    toggle(index) {
+        store.dispatch({type: 'TOGGLE', index});
+    }
+
     render() {
         return <div>
             <AddTodo add={this.add.bind(this)}/>
-            <TodoList todos={store.getState().todos} delete={this.delete.bind(this)}/>
+            <TodoList todos={store.getState().todos} delete={this.delete.bind(this)} toggle={this.toggle.bind(this)}/>
             <Footer/>
         </div>
     }
@@ -44,10 +48,15 @@ class TodoList extends Component {
         this.props.delete(index);
     }
 
+    toggle(index) {
+        this.props.toggle(index);
+    }
+
     render() {
         const todos = this.props.todos.map((todo, index)=> {
             return <div key={index}>
-                {todo.todo}
+                <input type="checkbox" checked={todo.isDone} onClick={this.toggle.bind(this, index)}/>
+                <span style={{"textDecoration": todo.isDone ? "line-through" : ""}}>{todo.todo}</span>
                 <button onClick={this.delete.bind(this, index)}>x</button>
             </div>
         });
@@ -57,8 +66,8 @@ class TodoList extends Component {
     }
 }
 
-class Footer extends Component{
-    render(){
+class Footer extends Component {
+    render() {
         return <div>
             footer
         </div>
