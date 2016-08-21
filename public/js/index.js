@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Reducer from '../reducer/reducer';
+import reducer from '../reducer/reducer';
 import {createStore} from 'redux';
 
-let store = createStore(Reducer);
+let store = createStore(reducer);
 
 class App extends Component {
     add(value) {
@@ -13,7 +13,7 @@ class App extends Component {
     render() {
         return <div>
             <AddTodo add={this.add.bind(this)}/>
-            <TodoList/>
+            <TodoList todos={store.getState().todos}/>
         </div>
     }
 }
@@ -32,12 +32,23 @@ class AddTodo extends Component {
     }
 }
 
-class TodoList extends Component{
-    render(){
+class TodoList extends Component {
+    render() {
+        const todos = this.props.todos.map((todo, index)=> {
+            return <div key={index}>
+                {console.log(todo.todo)}
+                {todo.todo}
+            </div>
+        });
         return <div>
-            todoList
+            {todos}
         </div>
     }
 }
 
-ReactDOM.render(<App/>, document.getElementById('content'));
+function showRender() {
+    ReactDOM.render(<App/>, document.getElementById('content'));
+}
+
+store.subscribe(showRender);
+showRender();
